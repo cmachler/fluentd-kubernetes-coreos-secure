@@ -17,6 +17,7 @@ RUN yum update -y && \
     yum clean all
 
 ADD fluent.conf /etc/fluent/fluent.conf
+ADD ca_cert.pem /etc/fluent/ca_cert.pem
 
 CMD ["je", "fluentd"]
 
