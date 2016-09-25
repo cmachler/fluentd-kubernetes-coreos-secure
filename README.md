@@ -13,6 +13,8 @@ Environment variables used by the image:
 ### Required to mount the ca_cert.pem file from the server to "/etc/fluent_cert/ca-cert.pem". 
 I am making this file in Kubernetes a secret and then mounting it to the pod as "/etc/fluent_cert/ca-cert.pem" Make sure to base64 encode the pem file contents, then you can post to the Kubernetes API the pem file as a secret. See below for posting secret to Kubernetes API.
 
+### Corresponding td-agent.conf running on EFK server attached to the GitHub repository.
+
 ### How to POST secret ca-cert.pem file to Kubernetes:
 
 1. [base64 encode contents of pem file](https://linux.die.net/man/1/base64)
@@ -27,7 +29,14 @@ I am making this file in Kubernetes a secret and then mounting it to the pod as 
     curl -H "Content-Type: application/json" -XPOST -d"$(cat /srv/kubernetes/manifests/fluentd-cloud-logging-ca-cert-secret.json)" "http://127.0.0.1:8080/api/v1/namespaces/kube-system/secrets"
     ```
 
-### DaemonSet JSON file Mounting "/var/log" for CoreOS systemd logs, and "/var/lib/docker/containers" for Kubernetes Container logs for fluentd to capture. Also mounting secret volume and creating secret environment variable:
+### The following should be added to your worker(s) cloud-config:
+
+```
+Environment="RKT_OPTS=--volume var-log,kind=host,source=/var/log --mount volume=var-log,target=/var/log"
+ExecStartPre=/usr/bin/mkdir -p /var/log/containers
+```
+
+### DaemonSet JSON file Mounting "/var/log" for CoreOS systemd logs, and "/var/lib/docker/containers" for Kubernetes Container logs for fluentd to capture. Also mounting secret volume and creating secret environment variable. This should be used in your cloud-config for your controller(s) [Full example can be found here](https://github.com/cmachler/coreos-kubernetes/blob/master/multi-node/generic/controller-install.sh):
 
 ```
 {
