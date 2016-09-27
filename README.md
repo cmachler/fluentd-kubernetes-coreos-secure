@@ -1,5 +1,6 @@
 # fluentd-kubernetes-coreos-secure
 
+
 Docker Container with Fluentd that will capture logs from containers running on Kubernetes, and collect CoreOS logs from systemd. This image is also using the secure forward plugin to send logs to td-agent running on Elasticsearch (EFK) stack.
 
 Environment variables used by the image:
@@ -139,4 +140,5 @@ ExecStartPre=/usr/bin/mkdir -p /var/log/containers
           }
 }
 ```
+
 
