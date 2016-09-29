@@ -4,6 +4,14 @@
 
 Docker Container with Fluentd that will capture logs from containers running on Kubernetes, and collect CoreOS logs from systemd. This image is also using the secure forward plugin to send logs to td-agent running on Elasticsearch (EFK) stack.
 
+## Tags:
+
+* `latest`     - using fluentd 0.14.x just basic ingesting of CoreOS and Kubernetes logs forwarding to EFK stack.
+* `nginx`      - same basic functions as latest but parses nginx logs from pods, but using fluentd 0.12.x because of [fluent-plugin-burrow](https://github.com/vanilla/fluent-plugin-burrow) crashing fluentd 0.14.x.
+* `dev`        - development environment for latest image.
+* `nginx-dev`  - development environment for nginx image.
+
+
 Environment variables used by the image:
 
 * `EFK_HOST`   - the IP address for the td-agent running on the EFK server.
