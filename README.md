@@ -1,5 +1,6 @@
 # fluentd-kubernetes-coreos-secure
 
+[![](https://images.microbadger.com/badges/version/evergreenitco/fluentd-kubernetes-coreos-secure.svg)](http://microbadger.com/images/evergreenitco/fluentd-kubernetes-coreos-secure "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/evergreenitco/fluentd-kubernetes-coreos-secure.svg)](http://microbadger.com/images/evergreenitco/fluentd-kubernetes-coreos-secure "Get your own image badge on microbadger.com")
 
 Docker Container with Fluentd that will capture logs from containers running on Kubernetes, and collect CoreOS logs from systemd. This image is also using the secure forward plugin to send logs to td-agent running on Elasticsearch (EFK) stack.
 
