@@ -7,7 +7,7 @@ Docker Container with Fluentd that will capture logs from containers running on 
 ## Tags:
 
 * `latest`     - using fluentd 0.14.x just basic ingesting of CoreOS and Kubernetes logs forwarding to EFK stack.
-* `nginx`      - same basic functions as latest but parses nginx logs from pods, but using fluentd 0.12.x because of [fluent-plugin-burrow](https://github.com/vanilla/fluent-plugin-burrow) crashing fluentd 0.14.x. Fixed with Pull Request vanilla/fluent-plugin-burrow#7  You also need to flatten the JSON hash after the burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
+* `nginx`      - same basic functions as latest but parses nginx logs from pods, but using fluentd 0.12.x because of [fluent-plugin-burrow](https://github.com/vanilla/fluent-plugin-burrow) crashing fluentd 0.14.x. Fixed with [Pull Request](https://github.com/vanilla/fluent-plugin-burrow/pull/7).  You also need to flatten the JSON hash after the burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
 * `dev`        - development environment for latest image.
 * `nginx-dev`  - development environment for nginx image.
 
