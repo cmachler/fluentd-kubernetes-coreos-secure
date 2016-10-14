@@ -3,7 +3,7 @@ FROM centos:7
 MAINTAINER Chris Machler <chris.machler@evergreenitco.com>
 
 ENV LD_LIBRARY_PATH /opt/rh/rh-ruby23/root/usr/lib64
-ENV FLUENTD_VERSION 0.12.29
+ENV FLUENTD_VERSION 0.14.8
 
 RUN yum update -y && \
     yum install -y centos-release-scl-rh && \
@@ -19,4 +19,3 @@ RUN yum update -y && \
 ADD fluent.conf /etc/fluent/fluent.conf
 
 CMD ["je", "fluentd"]
-
