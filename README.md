@@ -7,7 +7,7 @@ Docker Container with Fluentd that will capture logs from containers running on 
 ## Tags:
 
 * `latest`     - using fluentd 0.14.x just basic ingesting of CoreOS and Kubernetes logs forwarding to EFK stack.
-* `nginx`      - same basic functions as latest but parses nginx logs from pods, but using fluentd 0.12.x because of [fluent-plugin-burrow](https://github.com/vanilla/fluent-plugin-burrow) crashing fluentd 0.14.x. Fixed with [Pull Request](https://github.com/vanilla/fluent-plugin-burrow/pull/7).  You also need to flatten the JSON hash after the burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
+* `nginx`      - same basic functions as latest but parses nginx logs from pods whose name's begin with "nginx".  You also need to flatten the JSON hash after the burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
 * `dev`        - development environment for latest image.
 * `nginx-dev`  - development environment for nginx image.
 
@@ -20,7 +20,7 @@ Environment variables used by the image:
 * `SELF_HOSTNAME` - put whatever value you like (didn't seem to matter but required by the fluentd secure forward plugin).
 
 
-### Required to mount the ca_cert.pem file from the server to "/etc/fluent_cert/ca-cert.pem". 
+### Required to mount the ca_cert.pem file from the server to "/etc/fluent_cert/ca-cert.pem".
 I am making this file in Kubernetes a secret and then mounting it to the pod as "/etc/fluent_cert/ca-cert.pem" Make sure to base64 encode the pem file contents, then you can post to the Kubernetes API the pem file as a secret. See below for posting secret to Kubernetes API.
 
 ### Corresponding td-agent.conf running on EFK server attached to the GitHub repository.
@@ -29,12 +29,12 @@ I am making this file in Kubernetes a secret and then mounting it to the pod as 
 
 1. [base64 encode contents of pem file](https://linux.die.net/man/1/base64)
 2. Create Kubernetes secret template file to be called by cURL:
-    
+
     ```
     {"kind":"Secret","apiVersion":"v1","metadata":{"name":"fluentd-ca-cert-secret","creationTimestamp":null},"data":{"ca-cert.pem":"base64 output"}}
     ```
 3. POST to Kubernetes API the template JSON file created above:
-    
+
     ```
     curl -H "Content-Type: application/json" -XPOST -d"$(cat /srv/kubernetes/manifests/fluentd-cloud-logging-ca-cert-secret.json)" "http://127.0.0.1:8080/api/v1/namespaces/kube-system/secrets"
     ```
@@ -149,5 +149,3 @@ ExecStartPre=/usr/bin/mkdir -p /var/log/containers
           }
 }
 ```
-
-
