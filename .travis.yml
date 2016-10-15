@@ -6,5 +6,9 @@ services:
 install:
   - docker build -t evergreenitco/fluentd-kubernetes-coreos-secure .
   - docker run -d -v "${PWD}"/test/ca-cert.pem:/etc/fluent_cert/ca-cert.pem -v /doesnt/exist:/var/log/containers -v /doesnt/exist:/var/log/journal --name test -it evergreenitco/fluentd-kubernetes-coreos-secure
+
 script:
   - docker ps | grep -q evergreenitco/fluentd-kubernetes-coreos-secure
+
+after_success:
+  - ./test/build.sh
