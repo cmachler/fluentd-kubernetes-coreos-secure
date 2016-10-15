@@ -1,0 +1,15 @@
+services:
+- docker
+install:
+- docker build -t evergreenitco/fluentd-kubernetes-coreos-secure .
+- docker run -d -v "${PWD}"/test/ca-cert.pem:/etc/fluent_cert/ca-cert.pem -v /doesnt/exist:/var/log/containers
+  -v /doesnt/exist:/var/log/journal --name test -it evergreenitco/fluentd-kubernetes-coreos-secure
+script:
+- docker ps | grep -q evergreenitco/fluentd-kubernetes-coreos-secure
+after_success:
+- "./test/build.sh"
+env:
+  secure: Ti1NJFxz8+zjPpjCJcojHL18i7elL4BIUcP7AmSF2gttl9Pemg042BMsOS7WLMYPzpDAc0c72mgF+N8aoEVXuNUohjebr3yl88bC/2Xd1XerTgocGw1bYyL5SmWDsvxrd8jz2xFuCv/dF5gIBCWLrG6073rBimomaBKIb2GyRG+ue+KHRvPs5GDE8+kcZ3GvzfeIhtlYHzVleKe4bgBKQ93BIZxHyBDerYrI/2EPGLOgnmjBGLzTKHQFq7xLq0pZOOWygzw2HRW8vxKLYlqOXT4nzludhJ+69pMWbhYSieDyzVgAgom5y0DBWshAJq7NNW+nrbyDB4sx1FJXBahgRXxGOIfZrIMmYkxhP6XMizg1ybmAtpqlkYaEeVIFhoY8+AeIQH+m1N3KB/+dbIVjeGlmtS51ciC2pCBEY1B/vE+8VBigbwg6VV8z83nm9WnoDIXck/lYdQb6TKfjqajAOefo/2Q8xXLCcFtQIoaqXKddQv+1fugIuLKrpQLU9ahCQays5smE9xj727NFqT4V6heHrDV3aBuJmgL2YEiAPPUR6woRWcWras1XSd2fCxjshpg3WEMQkRUm+mGV24ONB8/Q44YjjZdKcdrxF3TpOLhatAflS5it9V2A+zZfhTe/zapUIgp68X06gF5rkP8RrT+RXkN5YJiWnWSmAUWD0bw=
+notifications:
+  slack:
+    secure: pdr+xhZwLem42W3Jxn56Ghb2ZjZLyMlGHPULs4nbzK6imhHBD+j7feCiGt2KS8drF8dE0/4Ahbl8207ZdRptuQvGBytrp0cxy2eKR2f7MmEa53zINqEksgGU5cfN6CKDLXYhEHsU+F3d2vfvHCzbqllnrNP4XC/C30mLmI11K1asqNYikXOqPpUTdOIZPuK8ieGl5nJAjYrgn+itCDkM3PQ/7J9kYyfO3fDAEeJSm2KGOTjVRkyHH7wKqFTwTNpUsMiPSaNIR50ggueQgexqzV/tT7d8jhX0nAYodMhdchnLTQt/d+whje02MR+Z6AChe6ePEUrQsXAiyQ262z1O/Q/4moi9pb/t5saHRuudfZs7+4QHiitt4bxTqmfRvFL+GFZcV07Jrc/UeUsd+oHiohKwxDwf9DWpaHwS6zKcdlmtDX59yZKEHIsy5rh8yc6XpXJLLX1lnB4v9h/F9NAkaZr/TsMwi9wQlQu2j23WwIv2kO/rmtXsW/iiSqpFBiBJziX8nOuUVyV3qMVRNB4m14aOJt6qkQp6OrMaEFVxghTmzaV4MH5kWJthQIqY7EXsxAZDhUZU5ox0nnx9ChJ0LyB0c/v87s8oyt2nHNM35hbhk0KcYR26KsPJvFLgK2Mpfaxk0t5w/7XxxiIDZaBXuQUt7mM7jQm/Qsbk5dSmZ/g=

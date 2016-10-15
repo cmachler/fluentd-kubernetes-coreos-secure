@@ -1,5 +1,6 @@
 # fluentd-kubernetes-coreos-secure
 
+[![Build Status](https://travis-ci.org/cmachler/fluentd-kubernetes-coreos-secure.svg?branch=master)](https://travis-ci.org/cmachler/fluentd-kubernetes-coreos-secure)
 [![](https://images.microbadger.com/badges/version/evergreenitco/fluentd-kubernetes-coreos-secure.svg)](http://microbadger.com/images/evergreenitco/fluentd-kubernetes-coreos-secure "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/evergreenitco/fluentd-kubernetes-coreos-secure.svg)](http://microbadger.com/images/evergreenitco/fluentd-kubernetes-coreos-secure "Get your own image badge on microbadger.com")
 
 Docker Container with Fluentd that will capture logs from containers running on Kubernetes, and collect CoreOS logs from systemd. This image is also using the secure forward plugin to send logs to td-agent running on Elasticsearch (EFK) stack.
@@ -7,9 +8,10 @@ Docker Container with Fluentd that will capture logs from containers running on 
 ## Tags:
 
 * `latest`     - using fluentd 0.14.x just basic ingesting of CoreOS and Kubernetes logs forwarding to EFK stack.
-* `nginx`      - same basic functions as latest but parses nginx logs from pods whose name's begin with "nginx". Need to flatten JSON hash after burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
+* `nginx`      - same basic functions as latest but parses nginx logs from pods whose name's begin with "nginx". You also need to flatten the JSON hash after the burrow parse for Elasticsearch to ingest, see td-agent.conf on nginx branch for reference.
 * `dev`        - development environment for latest image.
 * `nginx-dev`  - development environment for nginx image.
+
 
 Environment variables used by the image:
 
